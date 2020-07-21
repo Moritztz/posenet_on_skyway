@@ -62,6 +62,9 @@ $('#reciever').on('click', () => {
 $('#connect').on('submit', e => {
     e.preventDefault();
     //接続
+    const conn = peer.connect($('#their-id').val(), {
+        serialization: "none"
+    });
     Connect(conn);
 });
 
