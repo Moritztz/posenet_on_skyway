@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+    <title>SkyWay data connection</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script src="https://unpkg.com/@tensorflow/tfjs"></script>
+    <script src="https://unpkg.com/@tensorflow-models/posenet"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.js"></script>
+    <script src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!--<link href="style.css" rel="stylesheet" type="text/css">-->
+</head>
+
+<body>
+    <p>Your ID: <strong><span id="my-id">...</span></strong></p>
+    <div id="peerid-ui">
+        <p>select your id</p>
+        <button type="button" id="sender">Sender</button>
+        <button type="button" id="reciever">Reciever</button>
+    </div>
+    <form id="connect">
+        Connect to a peer: <input type="text" placeholder="Someone else's id" id="their-id">
+        <button type="submit">Connect</button>
+    </form>
+    <div id="connected-ui">
+        <p>Chat with <strong><span id="connected-id">...</span></strong></p>
+        <button type="button" id="close">Close</button>
+    </div>
+    <form id="send">
+        <input type="text" placeholder="Enter message" id="message">
+        <button type="submit">Send</button>
+    </form>
+    <div>
+        <p>S e n d: <span id="resultSend">...</span></p>
+        <p>Recieve: <span id="resultRecieve">...</span></p>
+        <br />
+        <p id="console"></p>
+    </div>
+    <br/>
+    <div>
+      <br>
+      <video id="js-local-stream" ></video>
+      <canvas id="canvas" ></canvas>
+    </div>
+    <div>
+        <button type="button" id="reload">Reload</button>
+    </div>
+</body>
+
+<!--jQueryを使っているので <body> → jQueryを使って記述したscript の順にすること-->
+
+<script src="sharedKey/key.js"></script>
+<script src="js/webcamera.js"></script>
+<script src="js/skyway.js"></script>
+<script src="js/demo_util.js"></script>
+<script src="js/main.js"></script>
+</html>
