@@ -73,14 +73,20 @@ function detectPoseInRealTime(video, net) {
         
         poses.forEach(({ score, keypoints }) => {
             
-            if(window.DataSend!=undefined){
+            if (window.DataSend != undefined) {
+                /* keypoints
+                0:nose, 1:leftEye, 2:rightEye
+                3:leftEar, 4:rightEar
+                5:leftShoulder, 6:rightShoulder +
+                7:leftElbow, 8:rightElbow +
+                9:leftWrist, 10:rightWrist +
+                11:leftHip, 12:rightHip
+                13:leftKnee, 14:rightKnee
+                15:leftAnkle, 16:rightAnkle
+                */
                 window.DataSend(keypoints[9]);
                 window.DataSend(keypoints[10]);
             }
-            
-            // keypoints[9]には左手、keypoints[10]には右手の予測結果が格納されている 
-           // console.log(keypoints[9]);
-            //console.log(keypoints[10]);
         });
         poses.forEach(({score, keypoints}) => {
           if (score >= minPoseConfidence) {
