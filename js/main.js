@@ -84,10 +84,10 @@ function detectPoseInRealTime(video, net) {
                 13:leftKnee, 14:rightKnee
                 15:leftAnkle, 16:rightAnkle
                 */
-                window.DataSend(keypoints[9]);
-                window.DataSend(keypoints[10]);
+                window.DataSend(JSON.stringify(keypoints));
             }
         });
+
         poses.forEach(({score, keypoints}) => {
           if (score >= minPoseConfidence) {
             if (guiState.output.showPoints) {
