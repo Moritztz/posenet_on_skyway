@@ -141,6 +141,7 @@ function Connect(conn) {
 
 //受信処理
 function DataRecieve(data) {
+    var jsObject = JSON.parse(data);
 }
 
 //UI操作
