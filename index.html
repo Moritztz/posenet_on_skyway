@@ -71,6 +71,7 @@
             float: left;
         }
     </style>
+    <link rel="stylesheet" href="media_style.css">
     <script src="https://unpkg.com/@tensorflow/tfjs"></script>
     <script src="https://unpkg.com/@tensorflow-models/posenet"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.js"></script>
@@ -83,29 +84,75 @@
 <body>
     <div id="info" style='display:none'>
     </div>
+
     <div id="loading" style='display:flex'>
         <div class="spinner-text">
             Loading PoseNet model...
         </div>
         <div class="sk-spinner sk-spinner-pulse"></div>
     </div>
-   
+
     <div id='main' style='display:none'>
         <video id="video" playsinline style="display: none;" width="640" height="480">
         </video>
         <canvas id="output" width="640" height="480"></canvas>
     </div>
-        
+
+    <div class="pure-g">
+        <!-- Video area -->
+        <div class="pure-u-2-3" id="video-container">
+            <video id="their-video" autoplay playsinline></video>
+        </div>
+        <!-- Steps -->
+        <div class="pure-u-1-3">
+            <h2>SkyWay Video Chat</h2>
+            <p>Your id: <span id="media-my-id">...</span></p>
+            <p>Options >> isRecieve: <span id="isrcv">false</span>, VIDEO CODEC: <span id="videocod">VP9</span></p>
+            <div id="media-peerid-ui">
+                <p>select your id</p>
+                <button href="#" class="pure-button pure-button-secondary" type="button" id="user11">User11</button>
+                <button href="#" class="pure-button pure-button-secondary" type="button" id="user12">User12</button>
+                <br>
+                <button href="#" class="pure-button pure-button-secondary" type="button" id="recieve">Recieve</button>
+                <button href="#" class="pure-button pure-button-secondary" type="button" id="random">Random</button>
+            </div>
+            <h3>Make a call</h3>
+            <form id="make-call" class="pure-form">
+                <input type="text" placeholder="Call user id..." id="callto-id">
+                <button href="#" class="pure-button pure-button-success" type="submit">Call</button>
+            </form>
+            <div id="end-call-ui">
+                <p>Currently in call with <span id="media-their-id">...</span></p>
+                <button href="#" class="pure-button pure-button-error" type="button" id="end-call">End call</button>
+                <p>
+                    <br>
+                    <button href="#" class="pure-button pure-button-hover" type="button" id="getting-stats">Getting stats</button>
+                    <button href="#" class="pure-button pure-button-hover" type="button" id="stop-acquiring-stats">Stop acquiring stats</button>
+                </p>
+            </div>
+            <div>
+                <br>
+                <button href="#" class="pure-button pure-button-error" type="button" id="reload">Reload</button>
+                <p id="console"></p>
+                <button href="#" class="pure-button pure-button-hover" type="button" id="rcvrecstart">RecieveRecStart</button>
+                <button href="#" class="pure-button pure-button-hover" type="button" id="recstop">RecStop</button>
+                <a id="downloadlink-video"></a>
+                <p id="remote-video"></p>
+                <a id="downloadlink-stats"></a>
+            </div>
+        </div>
+    </div>
+
     <div class="footer">
         <div class="footer-text">
-            <p>Your ID: <strong><span id="my-id">...</span></strong></p>
-            <div id="peerid-ui">
+            <p>Your ID: <strong><span id="data-my-id">...</span></strong></p>
+            <div id="data-peerid-ui">
                 <p>select your id</p>
                 <button type="button" id="sender">Sender</button>
                 <button type="button" id="reciever">Reciever</button>
             </div>
             <form id="connect">
-                Connect to a peer: <input type="text" placeholder="Someone else's id" id="their-id">
+                Connect to a peer: <input type="text" placeholder="Someone else's id" id="data-their-id">
                 <button type="submit">Connect</button>
             </form>
             <div id="connected-ui">
@@ -125,9 +172,11 @@
             <br/>
         </div>
     </div>
+
 <script src="sharedKey/key.js"></script>
 <script src="js/webcamera.js"></script>
-<script src="js/skyway.js"></script>
+<script src="js/skyway_data.js"></script>
+<script src="js/skyway_media.js"></script>
 <script src="js/demo_util.js"></script>
 <script src="js/main.js"></script>
 </body>

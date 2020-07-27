@@ -6,7 +6,7 @@ SetupMakeConnUI();
 
 function GetPeerId(id) {
     //ボタンをすべて消す　PeerIDがサーバーに残ってしまい初期化ができない
-    $('#peerid-ui').hide();
+    $('#data-peerid-ui').hide();
 
     peer = new Peer(id, {
         // Set API key for cloud server (you don't need this if you're running your
@@ -18,7 +18,7 @@ function GetPeerId(id) {
 
     // Show this peer's ID.
     peer.on('open', id => {
-        $('#my-id').text(id);
+        $('#data-my-id').text(id);
     });
 
     //着信処理
@@ -37,34 +37,34 @@ function GetPeerId(id) {
 //ID選択
 function UnityGetPeerId(id, theirId) {
     GetPeerId(id);
-    $('#their-id').val(theirId);
+    $('#data-their-id').val(theirId);
 }
 
 $('#twincam').on('click', () => {
     GetPeerId("twincam");
-    $('#their-id').val("user");
+    $('#data-their-id').val("user");
 });
 
 $('#user').on('click', () => {
     GetPeerId("user");
-    $('#their-id').val("twincam");
+    $('#data-their-id').val("twincam");
 });
 
 $('#sender').on('click', () => {
     GetPeerId("sender");
-    $('#their-id').val("reciever");
+    $('#data-their-id').val("reciever");
 });
 
 $('#reciever').on('click', () => {
     GetPeerId("reciever");
-    $('#their-id').val("sender");
+    $('#data-their-id').val("sender");
 });
 
 // Connect to a peer
 $('#connect').on('submit', e => {
     e.preventDefault();
     //接続
-    const conn = peer.connect($('#their-id').val(), {
+    const conn = peer.connect($('#data-their-id').val(), {
         serialization: "none"
     });
     Connect(conn);
