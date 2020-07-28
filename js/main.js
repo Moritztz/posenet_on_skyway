@@ -43,8 +43,6 @@ async function bindPage() {
     video.addEventListener('loadeddata', (event) => {
         detectPoseInRealTime(video,net);
       });
-    
-
 }
 
 
@@ -70,9 +68,9 @@ function detectPoseInRealTime(video, net) {
         ctx.translate(-contentWidth, 0);
         ctx.drawImage(video, 0, 0, contentWidth, contentHeight);
         ctx.restore();
-        
+
         poses.forEach(({ score, keypoints }) => {
-            
+
             if (window.DataSend != undefined) {
                 /* keypoints
                 0:nose, 1:leftEye, 2:rightEye
@@ -84,6 +82,14 @@ function detectPoseInRealTime(video, net) {
                 13:leftKnee, 14:rightKnee
                 15:leftAnkle, 16:rightAnkle
                 */
+                let timeAndScore = {}; //連想配列の作成
+
+                let date = new Date();
+                timeAndScore.timestamp = date.getTime(); //時間を取得(millis)
+                timeAndScore.score = score;
+
+                keypoints.push(timeAndScore); //末尾に連想配列を追加
+
                 window.DataSend(JSON.stringify(keypoints));
             }
         });
