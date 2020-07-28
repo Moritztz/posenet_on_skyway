@@ -1,7 +1,7 @@
 ﻿//'use strict';    //使わなくてもいいや 書き方を厳しくチェックするもの。あるとバグが起きにくくなりやすい。らしい
 
 let localStream = null;
-let peer = null;
+let peer_m = null;
 let existingCall = null;
 let isReceive = false;    //受信専用かどうか
 const MAIN_VIDEO_CODEC = 'VP9';
@@ -90,8 +90,8 @@ function getpeerid(id) {
     $('#media-peerid-ui').hide();
 
     //peerオブジェクトの作成
-    peer = new Peer(id,{
-        key: '6cee6718-08d3-4ce7-93a9-237ecd4601bb',     //APIkey
+    peer_m = new Peer(id,{
+        key: window.__SKYWAY_KEY__,     //APIkey
         debug: 3
     });
 
@@ -459,19 +459,19 @@ async function getRTCStats(statsObject) {
         lfHei = mediaStreamTrack_local_videoArray[0].frameHeight;
         lfWid = mediaStreamTrack_local_videoArray[0].frameWidth;
         lfSen = mediaStreamTrack_local_videoArray[0].framesSent;
-    } catch (e) {} 
+    } catch (e) {}
     try {
         rfHei = mediaStreamTrack_remote_videoArray[0].frameHeight;
         rfWid = mediaStreamTrack_remote_videoArray[0].frameWidth;
         rfRec = mediaStreamTrack_remote_videoArray[0].framesReceived;
-    } catch (e) {} 
+    } catch (e) {}
 
     $('#local-video').text('frameHeight:' + lfHei
                             + ' frameWidth:' + lfWid
                             + ' framesSent:' + lfSen);
     $('#remote-video').text('frameHeight:' + rfHei
-                             + ' frameWidth:' + rfWid
-                             + ' framesReceived:' + rfRec);
+                            + ' frameWidth:' + rfWid
+                            + ' framesReceived:' + rfRec);
 
     data_csv += statsCount * STATS_INTERVAL + ','
         + lfHei + ','
@@ -492,7 +492,7 @@ $('#reload').click(function () {
 //発信処理
 $('#make-call').submit(function (e) {
     e.preventDefault();
-    const call = peer.call($('#callto-id').val(), localStream, {
+    const call = peer_m.call($('#callto-id').val(), localStream, {
         videoCodec: vidCodec,
         videoReceiveEnabled: isReceive,
         audioReceiveEnabled: isReceive,
@@ -508,33 +508,33 @@ $('#end-call').click(function () {
 //イベント id取得後じゃないと動作しない
 function start() {
     //openイベント
-    peer.on('open', function () {
-        $('#media-my-id').text(peer.id);
+    peer_m.on('open', function () {
+        $('#media-my-id').text(peer_m.id);
     });
 
     //errorイベント
-    peer.on('error', function (err) {
+    peer_m.on('error', function (err) {
         //alert(err.message);
         $('#console').text(err.message);
         setupMakeCallUI();
     });
 
     //closeイベント
-    peer.on('close', function () {
+    peer_m.on('close', function () {
         //alert(err.message);
         $('#console').text(err.message);
         setupMakeCallUI();
     });
 
     //disconnectedイベント
-    peer.on('disconnected', function () {
+    peer_m.on('disconnected', function () {
         //alert(err.message);
         $('#console').text(err.message);
         setupMakeCallUI();
     });
 
     //着信処理
-    peer.on('call', function (call) {
+    peer_m.on('call', function (call) {
         call.answer(localStream, { videoCodec: vidCodec });
         setupCallEventHandlers(call);
     });
