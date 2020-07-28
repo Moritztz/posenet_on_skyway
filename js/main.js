@@ -4,7 +4,7 @@ const flipHorizontal = true;
 const stats = new Stats();
 const contentWidth = 640;
 const contentHeight = 480;
-const minPartConfidence = 0.4;
+const minPartConfidence = 0.6;
 const minPoseConfidence = 0.1;
 const guiState = {
   output: {
