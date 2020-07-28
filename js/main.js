@@ -88,7 +88,7 @@ function detectPoseInRealTime(video, net) {
                 timeAndScore.timestamp = date.getTime(); //時間を取得(millis)
                 timeAndScore.score = score;
 
-                let sendKeypoints = keypoints;
+                let sendKeypoints = keypoints.concat();  //引数に渡した配列を連結した新しい配列を生成(配列コピー)
 
                 sendKeypoints.push(timeAndScore); //末尾に連想配列を追加
 
