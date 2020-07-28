@@ -88,9 +88,11 @@ function detectPoseInRealTime(video, net) {
                 timeAndScore.timestamp = date.getTime(); //時間を取得(millis)
                 timeAndScore.score = score;
 
-                keypoints.push(timeAndScore); //末尾に連想配列を追加
+                let sendKeypoints = keypoints;
 
-                window.DataSend(JSON.stringify(keypoints));
+                sendKeypoints.push(timeAndScore); //末尾に連想配列を追加
+
+                window.DataSend(JSON.stringify(sendKeypoints));
             }
         });
 
