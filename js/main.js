@@ -82,14 +82,13 @@ function detectPoseInRealTime(video, net) {
                 13:leftKnee, 14:rightKnee
                 15:leftAnkle, 16:rightAnkle
                 */
-                let timeAndScore = {}; //連想配列の作成
 
+                //記録された時間の取得
+                let timeAndScore = {}; //連想配列の作成
                 let date = new Date();
                 timeAndScore.timestamp = date.getTime(); //時間を取得(millis)
                 timeAndScore.score = score;
-
-                let sendKeypoints = keypoints.concat();  //引数に渡した配列を連結した新しい配列を生成(配列コピー)
-
+                let sendKeypoints = keypoints.concat();  //配列コピー(引数に渡した配列を連結した新しい配列を生成)
                 sendKeypoints.push(timeAndScore); //末尾に連想配列を追加
 
                 window.DataSend(JSON.stringify(sendKeypoints));

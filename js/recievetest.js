@@ -14,5 +14,5 @@ dataconnection.onclick = function()
     const dataconnection2 = createDataConnection(connection_local);
     dataconnection2.on('data', data => {
         console.log(data);
-      });
+    });
 };
