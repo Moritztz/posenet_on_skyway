@@ -91,6 +91,8 @@ function detectPoseInRealTime(video, net) {
                 let sendKeypoints = keypoints.concat();  //配列コピー(引数に渡した配列を連結した新しい配列を生成)
                 sendKeypoints.push(timeAndScore); //末尾に連想配列を追加
 
+                window.gestureDetection(sendKeypoints);
+
                 window.DataSend(JSON.stringify(sendKeypoints));
             }
         });
