@@ -6,14 +6,14 @@ const MAX_INIT_COUNT = 20;
 let sum_delta_time = 0;
 let sampl_count = 0;
 
-let r_sho = 0;
-let r_elb = 0;
-let r_wri = 0;
 let l_sho = 0;
 let l_elb = 0;
 let l_wri = 0;
+let r_sho = 0;
+let r_elb = 0;
+let r_wri = 0;
 
-ボタンの表示
+//ボタンの表示
 function gestureDetection(data) {
   /* data score, part:string, position.x/y, timestamp, score(all)
   0:nose, 1:leftEye, 2:rightEye 3:leftEar, 4:rightEar
@@ -54,6 +54,14 @@ function gestureDetection(data) {
     r_sho.add(data[6]);
     r_elb.add(data[8]);
     r_wri.add(data[10]);
+
+    //データ選定
+    l_sho.updatePart();
+    l_elb.updatePart();
+    l_wri.updatePart();
+    r_sho.updatePart();
+    r_elb.updatePart();
+    r_wri.updatePart();
   }
 
   last_time = data[17].timestamp;
@@ -61,14 +69,14 @@ function gestureDetection(data) {
 
 //スコアが最も高いデータの位置x,y
 var ArrKeepData = function() {
-  this.keypoints = [0];
+  this.keypoints = [];
   this.x = 0;
   this.y = 0;
 
   this.add = function(part){
     this.keypoints.unshift(part);
-    if (this.keypoints.length() > sampl_count) {
-      part.pop();
+    if (this.keypoints.length > sampl_count) {
+      this.keypoints.pop();
     }
   }
 
