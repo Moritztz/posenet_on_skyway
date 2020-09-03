@@ -1,5 +1,6 @@
 const SAMPLING_DULATION = 400 //ms
 let last_time = 0;
+const MIN_CONFIDENCE = 0.3;
 
 let initCount = 0;
 const MAX_INIT_COUNT = 20;
@@ -75,18 +76,33 @@ function gestureDetection(data) {
       // r_hip.updatePart();
       initCount = 0;
     }
-    if (true) {
+
+    if (data[17].score > MIN_CONFIDENCE) {
       detector();
     }
   }
   last_time = data[17].timestamp;
 }
 
+//動作判定
 function detector() {
-  l_up_arm_ang = calc_angle(l_elb.x, l_elb.y, l_sho.x, Infinity, l_sho.x, l_sho.y, l_sho.x, l_sho.y);
-  l_low_arm_ang = calc_angle(l_wri.x, l_wri.y, l_elb.x, l_elb.y, l_elb.x, l_elb.y, l_sho.x, l_sho.y);
-  r_up_arm_ang = calc_angle(r_elb.x, r_elb.y, r_sho.x, Infinity, r_sho.x, r_sho.y, r_sho.x, r_sho.y);
-  r_low_arm_ang = calc_angle(r_wri.x, r_wri.y, r_elb.x, r_elb.y, r_elb.x, r_elb.y, r_sho.x, r_sho.y);
+  if (l_elb.score > MIN_CONFIDENCE && l_sho.score > MIN_CONFIDENCE) {
+    l_up_arm_ang = calc_angle(l_elb.x, l_elb.y, l_sho.x, Infinity, l_sho.x, l_sho.y, l_sho.x, l_sho.y);
+  }
+  if (l_wri.score > MIN_CONFIDENCE && l_elb.score > MIN_CONFIDENCE && l_sho.score > MIN_CONFIDENCE) {
+    l_low_arm_ang = calc_angle(l_wri.x, l_wri.y, l_elb.x, l_elb.y, l_elb.x, l_elb.y, l_sho.x, l_sho.y);
+  }
+  if (r_elb.score > MIN_CONFIDENCE && r_sho.score > MIN_CONFIDENCE) {
+    r_up_arm_ang = calc_angle(r_elb.x, r_elb.y, r_sho.x, Infinity, r_sho.x, r_sho.y, r_sho.x, r_sho.y);
+  }
+  if (r_wri.score > MIN_CONFIDENCE && r_elb.score > MIN_CONFIDENCE && r_sho.score > MIN_CONFIDENCE) {
+    r_low_arm_ang = calc_angle(r_wri.x, r_wri.y, r_elb.x, r_elb.y, r_elb.x, r_elb.y, r_sho.x, r_sho.y);
+  }
+
+
+
+
+  //表示
   $("#l_up_arm_ang").text(l_up_arm_ang);
   $("#l_low_arm_ang").text(l_low_arm_ang);
   $("#r_up_arm_ang").text(r_up_arm_ang);
@@ -110,6 +126,7 @@ var ArrKeepData = function() {
   this.keypoints = [];
   this.x = 0;
   this.y = 0;
+  this.score = 0;
 
   this.add = function(part){
     this.keypoints.unshift(part);
@@ -132,5 +149,6 @@ var ArrKeepData = function() {
                   .reduce( maxCallback, -Infinity);
     this.x = this.keypoints[index].position.x;
     this.y = this.keypoints[index].position.y;
+    this.score = this.keypoints[index].score;
   }
 }
