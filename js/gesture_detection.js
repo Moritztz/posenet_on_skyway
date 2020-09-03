@@ -19,11 +19,8 @@ let r_wri = 0;
 //ボタンの表示
 function gestureDetection(data) {
   /* data score, part:string, position.x/y, timestamp, score(all)
-  0:nose, 1:leftEye, 2:rightEye 3:leftEar, 4:rightEar
-  5:leftShoulder, 6:rightShoulder 7:leftElbow, 8:rightElbow
-  9:leftWrist, 10:rightWrist 11:leftHip, 12:rightHip
-  13:leftKnee, 14:rightKnee 15:leftAnkle, 16:rightAnkle
-  17:time
+  0:nose, 1:leftEye, 2:rightEye 3:leftEar, 4:rightEar, 5:leftShoulder, 6:rightShoulder 7:leftElbow, 8:rightElbow
+  9:leftWrist, 10:rightWrist 11:leftHip, 12:rightHip, 13:leftKnee, 14:rightKnee 15:leftAnkle, 16:rightAnkle, 17:time
   */
 
   //fps表示
@@ -138,12 +135,12 @@ function detector() {
   $("#r_low_arm_ang").text(r_low_arm_ang);
 }
 
-//直線の角度
+//ベクトルの角度
 function get_degree (x, y, xb, yb) {
   return Math.atan2 (y-yb, x-xb) * 180 / Math.PI;
 }
 
-//二直線の角度差を計算する
+//二ベクトルの角度差を計算する
 function calc_angle (x, y, xf, yf, xb, yb, xfb, yfb) {
   var r = get_degree (x, y, xb, yb);
   var rf = get_degree (xf, yf, xfb, yfb);
@@ -157,6 +154,7 @@ var ArrKeepData = function() {
   this.y = 0;
   this.score = 0;
 
+  //データの追加
   this.add = function(part){
     this.keypoints.unshift(part);
     if (this.keypoints.length > sampl_count) {
@@ -164,6 +162,7 @@ var ArrKeepData = function() {
     }
   }
 
+  //データの選択
   this.updatePart = function() {
     let index = 0;
     let maxCallback = (( max, cur, cIndex) => {
