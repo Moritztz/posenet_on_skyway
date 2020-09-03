@@ -165,7 +165,7 @@ function get_degree (x, y, xb, yb) {
   return Math.atan2 (y-yb, x-xb) * 180 / Math.PI;
 }
 
-//二ベクトルの角度差を計算する
+//2ベクトルの角度差を計算する
 function calc_angle (x, y, xf, yf, xb, yb, xfb, yfb) {
   var r = get_degree (x, y, xb, yb);
   var rf = get_degree (xf, yf, xfb, yfb);
