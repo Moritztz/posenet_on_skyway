@@ -16,6 +16,11 @@ let r_elb = 0;
 let r_wri = 0;
 // let r_hip = 0;
 
+let l_up_arm_ang = 0;
+let l_low_arm_ang = 0;
+let r_up_arm_ang = 0;
+let r_low_arm_ang = 0;
+
 //ボタンの表示
 function gestureDetection(data) {
   /* data score, part:string, position.x/y, timestamp, score(all)
