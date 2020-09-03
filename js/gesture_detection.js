@@ -74,6 +74,11 @@ function gestureDetection(data) {
       r_elb.updatePart();
       r_wri.updatePart();
       // r_hip.updatePart();
+
+      //正当性判定
+      justification(l_wri, r_wri); //手首
+      justification(l_elb, r_elb); //肘
+
       initCount = 0;
     }
 
@@ -82,6 +87,30 @@ function gestureDetection(data) {
     }
   }
   last_time = data[17].timestamp;
+}
+
+//正当性判定
+function justification(l, r) {
+  if ((l.x - r_sho.x) > 0) { //左
+    if ((r.x - l_sho.x) < 0) { //右
+      //両方入れ替え
+      let tmp_x = l.x;
+      let tmp_y = l.y;
+      let tmp_s = l.score;
+      l.x = r.x;
+      l.y = r.y;
+      l.score = r.score;
+      r.x = tmp_x;
+      r.y = tmp_y;
+      r.score = tmp_s;
+    }
+    else {
+      l.score = 0; //左を捨てる
+    }
+  }
+  else if ((r.x - l.x) < 0) { //右
+    r.score = 0;
+  }
 }
 
 //動作判定
